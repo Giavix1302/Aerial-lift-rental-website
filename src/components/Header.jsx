@@ -87,7 +87,7 @@ export default function Header() {
   return (
     <Box sx={{ width: "100vw", boxShadow: '1px 1px 10px rgba(0,0,0,0.1)', position: 'fixed', top: 0, zIndex: 100 }}>
       <Box sx={{
-        height: 36,
+        height: (theme) => theme.xeNangNguoi.headerTopHeight,
         width: "100vw",
         bgcolor: "primary.main",
         justifyContent: "space-between",
@@ -175,7 +175,7 @@ export default function Header() {
 
       </Box>
       <Box sx={{
-        height: 80,
+        height: (theme) => theme.xeNangNguoi.headerBottomHeight,
         width: "100vw",
         bgcolor: "white",
         display: "flex",
