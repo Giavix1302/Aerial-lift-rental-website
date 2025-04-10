@@ -24,7 +24,7 @@ export default function Header() {
 
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user.currentUser);
-  console.log(user);
+  // console.log(user);
 
   const [isModelLogin, setIsModalLogin] = useState(false);
 
@@ -44,7 +44,7 @@ export default function Header() {
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       if (user) {
-        console.log("User is signed in:", user);
+        // console.log("User is signed in:", user);
         // Redirect to the home page or do something else
         dispatch(setUser({
           uid: user.uid,

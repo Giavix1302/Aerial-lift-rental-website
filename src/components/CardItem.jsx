@@ -7,9 +7,13 @@ import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import { Category } from '@mui/icons-material';
 import Box from '@mui/material/Box';
+import { useNavigate } from 'react-router-dom';
 
 
 export default function CardItem({ item }) {
+  const navigate = useNavigate();
+
+  console.log('location:', location);
   return (
     <Card sx={{ height: '100%', cursor: 'pointer' }}>
       <CardMedia
@@ -33,7 +37,7 @@ export default function CardItem({ item }) {
         </Typography>
         <Box sx={{ mt: 'auto', display: 'flex', justifyContent: 'flex-start', gap: 2 }}>
           <Button variant='contained' sx={{ color: 'white' }}>Liên hệ</Button>
-          <Button variant='contained' sx={{ color: 'white' }}>Xem chi tiết</Button>
+          <Button onClick={() => navigate(`/item/${item.id}`, {state: {item}})} variant='contained' sx={{ color: 'white' }}>Xem chi tiết</Button>
         </Box>
       </CardContent>
     </Card>
