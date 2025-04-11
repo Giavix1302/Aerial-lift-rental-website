@@ -18,9 +18,21 @@ import { onAuthStateChanged, signOut } from "firebase/auth";
 import { auth } from "../firebase.js";
 import { useDispatch, useSelector } from "react-redux";
 import { clearUser, setUser } from "../redux/userSlide.js";
+import { useMediaQuery, useTheme } from '@mui/material';
+import IconButton from '@mui/material/IconButton';
+import MenuIcon from '@mui/icons-material/Menu';
+import MyDrawer from "./Drawer/Drawer.jsx";
 
 
 export default function Header() {
+  const [openDrawer, setOpenDrawer] = useState(false);
+
+  const toggleDrawer = (newOpen) => () => {
+    setOpenDrawer(newOpen);
+  };
+
+  const theme = useTheme();
+  const isMdDown = useMediaQuery(theme.breakpoints.down('md'));
 
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user.currentUser);
@@ -185,14 +197,22 @@ export default function Header() {
         paddingX: { lg: 20, md: 10, sm: 5, xs: 2 }
       }}>
         <img src={logo} alt="Logo" style={{ height: 80, padding: '4px' }} />
-        <Box sx={{ display: "flex", gap: 5, alignItems: "center" }}>
-          <Typography variant="h6" sx={{ cursor: 'pointer', '&:hover': { color: 'primary.main' } }}>Trang chủ</Typography>
-          <Typography variant="h6" sx={{ cursor: 'pointer', '&:hover': { color: 'primary.main' } }}>Giới thiệu</Typography>
-          <Typography variant="h6" sx={{ cursor: 'pointer', '&:hover': { color: 'primary.main' } }}>Sản phẩm cho thuê</Typography>
-          <Typography variant="h6" sx={{ cursor: 'pointer', '&:hover': { color: 'primary.main' } }}>Liên hệ</Typography>
-        </Box>
+        {isMdDown ? (
+          <IconButton onClick={() => setOpenDrawer(!openDrawer)} sx={{ color: 'primary.main' }}>
+            <MenuIcon fontSize='large' />
+          </IconButton>
+        ) : (
+          <Box sx={{ display: "flex", gap: { md: 4, lg: 5, }, alignItems: "center" }}>
+            <Typography variant="h6" sx={{ cursor: 'pointer', '&:hover': { color: 'primary.main' } }}>Trang chủ</Typography>
+            <Typography variant="h6" sx={{ cursor: 'pointer', '&:hover': { color: 'primary.main' } }}>Giới thiệu</Typography>
+            <Typography variant="h6" sx={{ cursor: 'pointer', '&:hover': { color: 'primary.main' } }}>Sản phẩm cho thuê</Typography>
+            <Typography variant="h6" sx={{ cursor: 'pointer', '&:hover': { color: 'primary.main' } }}>Liên hệ</Typography>
+          </Box>
+
+        )}
       </Box>
       <BasicModal open={openModel} handleClose={handleCloseModel} isModelLogin={isModelLogin} />
+      <MyDrawer open={openDrawer} toggleDrawer={toggleDrawer} />
     </Box >
   );
 }
