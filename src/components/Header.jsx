@@ -8,7 +8,7 @@ import Avatar from '@mui/material/Avatar';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import { useState, useEffect } from "react";
-
+import { useNavigate } from "react-router-dom";
 
 import Logout from '@mui/icons-material/Logout';
 import ListItemIcon from '@mui/material/ListItemIcon';
@@ -25,12 +25,17 @@ import MyDrawer from "./Drawer/Drawer.jsx";
 
 
 export default function Header() {
+  //navigate
+  const navigate = useNavigate();
+
+  // drawer
   const [openDrawer, setOpenDrawer] = useState(false);
 
   const toggleDrawer = (newOpen) => () => {
     setOpenDrawer(newOpen);
   };
 
+  // get breakpoint
   const theme = useTheme();
   const isMdDown = useMediaQuery(theme.breakpoints.down('md'));
 
@@ -191,28 +196,55 @@ export default function Header() {
         width: "100vw",
         bgcolor: "white",
         display: "flex",
+        flexDirection: { xs: 'row-reverse', sm: 'row-reverse', md: 'row', lg: 'row', xl: 'row' },
         justifyContent: 'space-between',
         alignItems: "center",
         paddingY: 2,
         paddingX: { lg: 20, md: 10, sm: 5, xs: 2 }
       }}>
-        <img src={logo} alt="Logo" style={{ height: 80, padding: '4px' }} />
+        {isMdDown && <Box sx={{ width: '51px' }}></Box>}
+        <img onClick={() => navigate('/')} src={logo} alt="Logo" style={{ height: 80, padding: '4px', cursor: 'pointer' }} />
         {isMdDown ? (
           <IconButton onClick={() => setOpenDrawer(!openDrawer)} sx={{ color: 'primary.main' }}>
             <MenuIcon fontSize='large' />
           </IconButton>
         ) : (
           <Box sx={{ display: "flex", gap: { md: 4, lg: 5, }, alignItems: "center" }}>
-            <Typography variant="h6" sx={{ cursor: 'pointer', '&:hover': { color: 'primary.main' } }}>Trang chủ</Typography>
-            <Typography variant="h6" sx={{ cursor: 'pointer', '&:hover': { color: 'primary.main' } }}>Giới thiệu</Typography>
-            <Typography variant="h6" sx={{ cursor: 'pointer', '&:hover': { color: 'primary.main' } }}>Sản phẩm cho thuê</Typography>
-            <Typography variant="h6" sx={{ cursor: 'pointer', '&:hover': { color: 'primary.main' } }}>Liên hệ</Typography>
+            <Typography
+              onClick={() => navigate('/')}
+              variant="h6"
+              sx={{ cursor: 'pointer', '&:hover': { color: 'primary.main' } }}
+            >
+              Trang chủ
+            </Typography>
+            <Typography
+              onClick={() => navigate('/about')}
+              variant="h6"
+              sx={{ cursor: 'pointer', '&:hover': { color: 'primary.main' } }}
+            >
+              Giới thiệu
+            </Typography>
+            <Typography
+              onClick={() => navigate('/item')}
+              variant="h6"
+              sx={{ cursor: 'pointer', '&:hover': { color: 'primary.main' } }}
+            >
+              Xe nâng cho thuê
+            </Typography>
+            <Typography
+              onClick={() => navigate('/contact')}
+              variant="h6"
+              sx={{ cursor: 'pointer', '&:hover': { color: 'primary.main' } }}
+            >
+              Liên hệ
+            </Typography>
           </Box>
 
         )}
+
       </Box>
       <BasicModal open={openModel} handleClose={handleCloseModel} isModelLogin={isModelLogin} />
-      <MyDrawer open={openDrawer} toggleDrawer={toggleDrawer} />
+      <MyDrawer open={openDrawer} toggleDrawer={toggleDrawer} handleOpenModel={handleOpenLoginModel} handleLogout={handleLogout} />
     </Box >
   );
 }

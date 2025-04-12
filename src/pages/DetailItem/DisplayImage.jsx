@@ -2,6 +2,7 @@ import { styled } from "@mui/material";
 import Box from '@mui/material/Box'
 import React, { useState, useEffect, useRef } from "react";
 import Slider from "react-slick";
+import { useMediaQuery, useTheme } from '@mui/material';
 
 const MainImage = styled("img")({
   width: "100%",
@@ -18,6 +19,22 @@ const ThumbnailImage = styled("img")({
 });
 
 function AsNavFor({ images }) {
+  // get breakpoint
+  const theme = useTheme();
+  const isMd = useMediaQuery(theme.breakpoints.between('md', 'sm'));
+  const isSmDown = useMediaQuery(theme.breakpoints.down('sm'));
+  const [quantity, setQuantity] = useState(3);
+
+  useEffect(() => {
+    if (isMd) {
+      console.log("is md");
+    } else if (isSmDown) {
+      console.log("is sm down");
+    }
+
+  }, [isMd, isSmDown]);
+
+
   const [nav1, setNav1] = useState(null);
   const [nav2, setNav2] = useState(null);
   let sliderRef1 = useRef(null);
@@ -42,7 +59,7 @@ function AsNavFor({ images }) {
       <Slider
         asNavFor={nav1}
         ref={slider => (sliderRef2 = slider)}
-        slidesToShow={3}
+        slidesToShow={quantity}
         swipeToSlide={true}
         focusOnSelect={true}
       >
