@@ -3,6 +3,7 @@ import "slick-carousel/slick/slick-theme.css";
 
 import React from "react";
 import Slider from "react-slick";
+import { styled } from "@mui/material";
 
 import slide1 from "../assets/images/slide1.jpg";
 import slide2 from "../assets/images/slide2.jpg";
@@ -24,13 +25,21 @@ const images = [
   slide8,
 ];
 
+const MyImg = styled("img")(({ theme }) => ({
+  width: "100%",
+  height: "500px",
+  objectFit: "cover",
+  [theme.breakpoints.down('sm')]: {
+    height: "300px",
+  },
+}));
+
 const ImageSlide = ({ image }) => {
   return (
     <div style={{}}>
-      <img
+      <MyImg
         src={image}
         alt="Slide"
-        style={{ width: "100%", height: "500px", objectFit: "cover" }}
       />
     </div>
   );

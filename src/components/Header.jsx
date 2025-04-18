@@ -22,7 +22,16 @@ import { useMediaQuery, useTheme } from '@mui/material';
 import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
 import MyDrawer from "./Drawer/Drawer.jsx";
+import { styled } from "@mui/material";
 
+const MyImg = styled("img")(({ theme }) => ({
+  height: 80,
+  padding: '4px',
+  cursor: 'pointer',
+  [theme.breakpoints.down('sm')]: {
+    height: 60,
+  },
+}));
 
 export default function Header() {
   //navigate
@@ -185,8 +194,8 @@ export default function Header() {
         ) : (
           <Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>
             <Link onClick={() => handleOpenLoginModel()} sx={{ color: "white", textDecoration: 'none', cursor: 'pointer' }}>Đăng nhập</Link>
-            <Divider orientation="vertical" flexItem sx={{ borderColor: 'white' }} />
-            <Link onClick={() => handleOpenSignUpModel()} sx={{ color: "white", textDecoration: 'none', cursor: 'pointer' }}>Đăng ký</Link>
+            <Divider orientation="vertical" flexItem sx={{ borderColor: 'white', display: { xs: 'none', sm: 'block' } }} />
+            <Link onClick={() => handleOpenSignUpModel()} sx={{ color: "white", textDecoration: 'none', cursor: 'pointer', display: { xs: 'none', sm: 'block' } }}>Đăng ký</Link>
           </Box>
         )}
 
@@ -203,7 +212,7 @@ export default function Header() {
         paddingX: { lg: 20, md: 10, sm: 5, xs: 2 }
       }}>
         {isMdDown && <Box sx={{ width: '51px' }}></Box>}
-        <img onClick={() => navigate('/')} src={logo} alt="Logo" style={{ height: 80, padding: '4px', cursor: 'pointer' }} />
+        <MyImg onClick={() => navigate('/')} src={logo} alt="Logo" style={{}} />
         {isMdDown ? (
           <IconButton onClick={() => setOpenDrawer(!openDrawer)} sx={{ color: 'primary.main' }}>
             <MenuIcon fontSize='large' />
